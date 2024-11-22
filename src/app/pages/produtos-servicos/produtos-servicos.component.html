@@ -1,50 +1,191 @@
+<p-tabView>
+  <p-tabPanel header="Produtos">
+    <button pButton label="Cadastrar Novo Produto" icon="pi pi-plus" (click)="abrirDialogoCadastrarProduto()"
+      class="botão-pop_up"></button>
+    <p-table [value]="produtos" [paginator]="true" [rows]="5">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Preço</th>
+          <th>Quantidade</th>
+          <th>Valor em Pontos</th>
+          <th>ações</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-produto>
+        <tr>
+          <td>{{ produto.id }}</td>
+          <td>{{ produto.nome }}</td>
+          <td>{{ produto.preco }}</td>
+          <td>{{ produto.quantidade }}</td>
+          <td>{{ produto.valorEmPontos }}</td>
+          <td><button pButton icon="pi pi-trash"></button> <button pButton icon="pi pi-pencil" (click)="abrirDialogoEditarProduto(produto)"></button></td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-tabPanel>
 
-  <p-tabView >
-    <p-tabPanel header="Produtos" >
-      <p-table [value]="produtos" [paginator]="true" [rows]="5" >
-        <ng-template pTemplate="header">
-          <tr>
-            <th>ID</th>
-            <th>Nome</th>
-            <th>Preço</th>
-            <th>Quantidade</th>
-            <th>Valor em Pontos</th>
-            <th>ações</th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-produto>
-          <tr>
-            <td>{{ produto.id }}</td>
-            <td>{{ produto.nome }}</td>
-            <td>{{ produto.preco }}</td>
-            <td>{{ produto.quantidade }}</td>
-            <td>{{ produto.valorEmPontos }}</td>
-            <td><button pButton icon="pi pi-trash"></button> <button pButton icon="pi pi-pencil"></button></td>
-          </tr>
-        </ng-template>
-      </p-table>
-    </p-tabPanel>
+  <p-tabPanel header="Serviços">
+    <button pButton label="Cadastrar Novo produto" icon="pi pi-plus" (click)="abrirDialogoCadastrarProduto()"
+      class="botão-pop_up"></button>
+    <p-table [value]="servicos" [paginator]="true" [rows]="5">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Preço</th>
+          <th>Valor em Pontos</th>
+          <th>ações</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-servico>
+        <tr>
+          <td>{{ servico.id }}</td>
+          <td>{{ servico.nome }}</td>
+          <td>{{ servico.preco | currency : "R$"}}</td>
+          <td>{{ servico.valorEmPontos }}</td>
+          <td><button pButton icon="pi pi-trash" (click)="abrirDialogoExcluirServico(servico)"></button> <button pButton icon="pi pi-pencil" (click)="abrirDialogoEditarServico(servico)"></button></td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-tabPanel>
+</p-tabView>
 
-    <p-tabPanel header="Serviços">
-      <p-table [value]="servicos" [paginator]="true" [rows]="5">
-        <ng-template pTemplate="header">
-          <tr>
-            <th>ID</th>
-            <th>Nome</th>
-            <th>Preço</th>
-            <th>Valor em Pontos</th>
-            <th>ações</th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-servico>
-          <tr>
-            <td>{{ servico.id }}</td>
-            <td>{{ servico.nome }}</td>
-            <td>{{ servico.preco }}</td>
-            <td>{{ servico.valorEmPontos }}</td>
-            <td><button pButton icon="pi pi-trash"></button> <button pButton icon="pi pi-pencil"></button></td>
-          </tr>
-        </ng-template>
-      </p-table>
-    </p-tabPanel>
-  </p-tabView>
+
+<!-- dialogo servico -->
+
+<p-dialog [(visible)]="exibirDialogEditarServico" [modal]="true" [closable]="false" [style]="{width: '50vw'}">
+  <h2>Cadastrar Serviço</h2>
+  <form [formGroup]="formCadastroServico">
+    <div class="dialogo-input">
+      <label for="nome">Nome</label>
+      <input id="nome" formControlName="nome" type="text" />
+    </div>
+    <div class="dialogo-input">
+      <label for="preco">Preço</label>
+      <input id="preco" formControlName="preco" type="text" />
+    </div>
+    <div class="dialogo-input">
+      <label for="valorEmPontos">Valor em Pontos</label>
+      <input id="valorEmPontos" formControlName="valorEmPontos" type="text" />
+    </div>
+    <button (click)="cadastrarServico()" [disabled]="!formCadastroServico.valid" class="botão-pop_up">Salvar</button>
+    <button (click)="fecharDialogCadastrarServico()" class="botão-pop_up">Cancelar</button>
+  </form>
+</p-dialog>
+
+<p-dialog [(visible)]="exibirDialogEditarServico" [modal]="true" [closable]="false" [style]="{width: '50vw'}">
+  <h2>Editar Serviço</h2>
+  <form [formGroup]="formCadastroServico">
+    <div class="dialogo-input">
+      <label for="nome">Nome</label>
+      <input id="nome" formControlName="nome" type="text" />
+    </div>
+    <div class="dialogo-input">
+      <label for="preco">Preço</label>
+      <input id="preco" formControlName="preco" type="text" />
+    </div>
+    <div class="dialogo-input">
+      <label for="valorEmPontos">Valor em Pontos</label>
+      <input id="valorEmPontos" formControlName="valorEmPontos" type="text" />
+    </div>
+    <button (click)="exibirDialogoConfirmacaoEdicaoServico = true" [disabled]="!formCadastroServico.valid" class="botão-pop_up">Salvar</button>
+    <button (click)="fecharDialogEditarServico()" class="botão-pop_up">Cancelar</button>
+  </form>
+</p-dialog>
+
+
+<p-dialog
+  [(visible)]="exibirDialogoConfirmacaoEdicaoServico"
+  header="Confirmar Edição"
+  [modal]="true"
+  [closable]="false"
+  [style]="{ width: '300px' }"
+>
+  <p>Tem certeza de que deseja salvar as alterações?</p>
+  <div class="p-dialog-footer">
+    <button pButton label="Não" (click)="exibirDialogoConfirmacaoEdicaoServico = false" class="botão-pop_up"></button>
+    <button pButton label="Sim" (click)="atualizarServico()" class="botão-pop_up" ></button>
+  </div>
+</p-dialog>
+
+
+<p-dialog
+  [(visible)]="exibirDialogDeletarServico"
+  header="Confirmar Exclusão"
+  [modal]="true"
+  [closable]="false"
+  [style]="{ width: '300px' }"
+>
+  <p>Tem certeza de que deseja excluir o serviço <b>{{ servicoSelecionado?.nome }}</b>?</p>
+  <div class="p-dialog-footer">
+    <button pButton label="Não" (click)="exibirDialogDeletarServico = false" class="botão-pop_up"></button>
+    <button pButton label="Sim" (click)="confirmarDelecaoServico()" class="botão-pop_up"></button>
+  </div>
+</p-dialog>
+
+
+<!-- dialogos produto -->
+
+<p-dialog [(visible)]="exibirDialogCadastroProduto" [modal]="true" [closable]="false" [style]="{width: '50vw'}">
+  <h2>Cadastrar Serviço</h2>
+  <form [formGroup]="formCadastroProduto">
+    <div class="dialogo-input">
+      <label for="nome">Nome</label>
+      <input id="nome" formControlName="nome" type="text" />
+    </div>
+    <div class="dialogo-input">
+      <label for="preco">Preço</label>
+      <input id="preco" formControlName="preco" type="text" />
+    </div>
+    <div class="dialogo-input">
+      <label for="quantidade">Quantidade</label>
+      <input id="quantidade" formControlName="quantidade" type="text" />
+    </div>
+    <div class="dialogo-input">
+      <label for="valorEmPontos">Valor em Pontos</label>
+      <input id="valorEmPontos" formControlName="valorEmPontos" type="text" />
+    </div>
+    <button (click)="cadastrarProduto()" [disabled]="!formCadastroProduto.valid" class="botão-pop_up">Salvar</button>
+    <button (click)="fecharDialogCadastrarProduto()" class="botão-pop_up">Cancelar</button>
+  </form>
+</p-dialog>
+
+<p-dialog [(visible)]="exibirDialogoEditarProduto" [modal]="true" [closable]="false" [style]="{width: '50vw'}">
+  <h2>Editar Produto</h2>
+  <form [formGroup]="formCadastroProduto">
+    <div class="dialogo-input">
+      <label for="nome">Nome</label>
+      <input id="nome" formControlName="nome" type="text" />
+    </div>
+    <div class="dialogo-input">
+      <label for="preco">Preço</label>
+      <input id="preco" formControlName="preco" type="text" />
+    </div>
+    <div class="dialogo-input">
+      <label for="quantidade">Quantidade</label>
+      <input id="quantidade" formControlName="quantidade" type="text" />
+    </div>
+    <div class="dialogo-input">
+      <label for="valorEmPontos">Valor em Pontos</label>
+      <input id="valorEmPontos" formControlName="valorEmPontos" type="text" />
+    </div>
+    <button (click)="exibirDialogoConfirmarEditarProduto = true" [disabled]="!formCadastroProduto.valid" class="botão-pop_up">Salvar</button>
+    <button (click)="fecharDialogEditarProduto()" class="botão-pop_up">Cancelar</button>
+  </form>
+</p-dialog>
+
+<p-dialog
+  [(visible)]="exibirDialogoConfirmarEditarProduto"
+  header="Confirmar Edição"
+  [modal]="true"
+  [closable]="false"
+  [style]="{ width: '300px' }"
+>
+  <p>Tem certeza de que deseja salvar as alterações?</p>
+  <div class="p-dialog-footer">
+    <button pButton label="Não" (click)="exibirDialogoConfirmarEditarProduto = false" class="botão-pop_up"></button>
+    <button pButton label="Sim" (click)="atualizarProduto()" class="botão-pop_up" ></button>
+  </div>
+</p-dialog>

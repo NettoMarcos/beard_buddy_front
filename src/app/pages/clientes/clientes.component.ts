@@ -57,6 +57,7 @@ export class ClientesComponent {
       cpf: ['', Validators.required],
       telefone: ['', Validators.required],
       dataNascimento: ['', Validators.required],
+      pontos: ['',]
     });
   }
 

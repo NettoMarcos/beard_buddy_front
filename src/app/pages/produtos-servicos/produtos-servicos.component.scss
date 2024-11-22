@@ -1,6 +1,4 @@
-
-
-tr th{
+tr th {
     background-color: var(--cinza);
     border: 1px solid var(--cor_fonte);
 
@@ -8,13 +6,14 @@ tr th{
     font-size: 20px;
     color: var(--cor_fonte);
 }
-tr td{
+
+tr td {
     color: var(--cor_fonte);
     border-bottom: solid 1px;
     text-align: center;
 }
 
-button{
+button {
     background-color: var(--roxo_claro);
     color: var(--cor_fonte);
     border: 1px solid var(--cinza_escuro);
@@ -24,8 +23,20 @@ button{
     margin: 1px;
 }
 
-button:hover, .p-button:hover {
+button:hover,
+.p-button:hover {
 
     background-color: var(--roxo_escuro);
     border: 1px solid var(--cor_fonte);
+}
+
+.botão-pop_up {
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.dialogo-input {
+    padding: 7px;
+    display: flex;
+    flex-direction: column;
 }

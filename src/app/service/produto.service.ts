@@ -51,8 +51,8 @@ export class ProdutoService {
   }
 
   // Atualizar Produto
-  atualizarProduto(dto: ProdutoAtualizarDTO): Observable<ProdutoDetalhesDTO> {
-    return this.http.put<ProdutoDetalhesDTO>(`${this.apiUrl}/atualizar`, dto);
+  atualizarProduto(dto: ProdutoAtualizarDTO): Observable<ProdutoAtualizarDTO> {
+    return this.http.put<ProdutoAtualizarDTO>(`${this.apiUrl}/atualizar`, dto);
   }
 
   // Excluir Produto

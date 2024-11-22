@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Route, Router } from '@angular/router';
+import { NavigationEnd, Route, Router } from '@angular/router';
+import { filter } from 'rxjs';
 import { FaturaService, FaturaValorTotalDTO } from 'src/app/service/fatura.service';
 
 @Component({
@@ -20,6 +21,18 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.obterValorTotalFaturasMesAtual();
+    this.totalProdutosMes();
+    this.totalServicoMes();
+
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.carregarDados();
+    });
+  }
+
+  carregarDados(): void {
     this.obterValorTotalFaturasMesAtual();
     this.totalProdutosMes();
     this.totalServicoMes();

@@ -52,7 +52,7 @@ export class FaturaService {
 
   // Método para excluir fatura
   excluirFatura(id: number): Observable<void> {
-    const url = `${this.baseUrl}/atualizar/${id}`;
+    const url = `${this.baseUrl}/deletar/${id}`;
     return this.http.delete<void>(url);
   }
 

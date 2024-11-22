@@ -13,6 +13,7 @@
       <th>CPF</th>
       <th>Telefone</th>
       <th>Data de Nascimento</th>
+      <th>Pontos do cliente</th>
       <th>Ações</th>
     </tr>
   </ng-template>
@@ -23,6 +24,7 @@
       <td>{{ cliente.cpf }}</td>
       <td>{{ cliente.telefone }}</td>
       <td>{{ cliente.dataNascimento | date : "dd/MM/yyyy" }}</td>
+      <td>{{cliente.pontos}}</td>
       <td>
         <button pButton icon="pi pi-pencil" (click)="abrirDialogEditar(cliente)"></button>
         <button pButton icon="pi pi-trash" (click)="abrirDialogDeletar(cliente)"></button>
@@ -49,7 +51,11 @@
     </div>
     <div class="dialogo-input">
       <label for="dataNascimento">Data de Nascimento</label>
-      <input id="dataNascimento" formControlName="dataNascimento" type="date" />
+      <input id="dataNascimento" formControlName="dataNascimento"/>
+    </div>
+    <div class="dialogo-input">
+      <label for="pontos">Pontos</label>
+      <input id="pontos" formControlName="pontos"/>
     </div>
     <button (click)="exibirDialogConfirmacaoEdicao = true" [disabled]="!formEdicao.valid" class="botão-pop_up">Salvar</button>
     <button (click)="fecharDialogEditar()" class="botão-pop_up">Cancelar</button>

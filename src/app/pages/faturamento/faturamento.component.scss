@@ -29,3 +29,14 @@ button{
     background-color: var(--roxo_escuro);
     border: 1px solid var(--cor_fonte);
   }
+
+  .botão-pop_up{
+    border-radius: 5px;
+    padding: 10px;
+  }
+  
+  .dialogo-input{
+    padding: 7px;
+    display: flex;
+    flex-direction: column;
+  }

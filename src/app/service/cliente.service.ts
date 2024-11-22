@@ -8,6 +8,7 @@ export interface ClienteDetalhesDTO {
   cpf: string;
   telefone: string;
   dataNascimento: Date;
+  pontos: number;
 }
 
 export interface ClienteCadastroDTO {
@@ -23,6 +24,7 @@ export interface ClienteAtualizarDTO {
   cpf?: string;
   telefone?: string;
   dataNascimento?: Date;
+  pontos?: number
 }
 
 @Injectable({

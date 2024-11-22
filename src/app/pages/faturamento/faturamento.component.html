@@ -16,8 +16,24 @@
         <td>{{ fatura.tipo }}</td>
         <td>{{ fatura.valorFatura | currency: 'RS' }}</td>
         <td>{{ fatura.dataPagamento | date }}</td>
-        <td><button pButton icon="pi pi-trash"></button> <button pButton icon="pi pi-pencil"></button></td>
+        <td><button pButton icon="pi pi-trash" (click)="abrirDialogDeletar(fatura)"></button></td>
       </tr>
     </ng-template>
     
   </p-table>
+
+  
+<!-- Dialog para Confirmação de Deleção -->
+<p-dialog
+  [(visible)]="exibirDialogDeletar"
+  header="Confirmar Exclusão"
+  [modal]="true"
+  [closable]="false"
+  [style]="{ width: '300px' }"
+>
+  <p>Tem certeza de que deseja excluir a fatura</p>
+  <div class="p-dialog-footer">
+    <button pButton label="Não" (click)="fecharDialogDeletar()" class="botão-pop_up"></button>
+    <button pButton label="Sim" (click)="confirmarDelecao()" class="botão-pop_up"></button>
+  </div>
+</p-dialog>
