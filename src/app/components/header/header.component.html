@@ -1,9 +1,11 @@
 <header>
     <div class="option-container">
-        <img src="../../../assets/Logo-roxo.png" alt="Logo Buddy Beard" class="logo">
+        <img src="../../../assets/Logo-roxo.png" alt="Logo Buddy Beard" class="logo" [routerLink]="['/home']">
         <nav>
              <ul>
-                <li>Servicos</li>
+                <li [routerLink]="['/produtos-servicos']" >Produtos e Servicos</li>
+                <li [routerLink]="['/faturamento']">Faturamento</li>
+                <li [routerLink]="['/clientes']">Clientes</li>
             </ul>
         </nav>
     </div>

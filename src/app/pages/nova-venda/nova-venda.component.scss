@@ -1,0 +1,115 @@
+.card-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 50px;
+  }
+  
+  .card {
+    width: 100%;
+    max-width: 650px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  }
+  
+  .card-header {
+    background-color: var(--roxo_escuro);
+    color: black;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .card-body {
+    padding: 20px;
+    color: var(--cor_fonte);
+    background-color: var(--cinza_escuro);
+    border-bottom: solid 1px var(--roxo_claro);
+  }
+  
+  .card-footer {
+    color: var(--cor_fonte);
+    padding: 10px 20px;
+    text-align: center;
+    align-items: center;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+    background-color: var(--cinza);
+    border: 1px solid var(--cinza_escuro);
+    text-align: center;
+  }
+  
+  .form-group label {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 8px;
+  }
+  
+  
+  button{
+    background-color: var(--roxo_claro);
+    color: var(--cor_fonte);
+    padding: 10px 20px;
+    border: 1px solid var(--cinza_escuro);
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 10px auto;
+    font-size: 1.1rem;
+  }
+  
+  button:hover, .p-button:hover {
+    background-color: var(--roxo_escuro);
+    border: 1px solid var(--cor_fonte);
+  }
+  
+  i {
+    font-size: 25px;
+    margin-right: 5px;
+  }
+  
+  .p-table th {
+    color: var(--cor_fonte);
+    padding: 10px;
+  }
+  
+  .p-table td {
+    padding: 10px;
+  }
+
+  .acao{
+    font-size: 10px;
+    text-align: center;
+  }
+
+  tr th{
+    text-align: center;
+    border: 1px solid;
+    padding: 5px 10px;
+    color: var(--cor_fonte);
+  }
+
+  tr td{
+    text-align: center;
+    border-bottom: 1px solid;
+    color: var(--cor_fonte);
+  }
+
+  .campo-cpf{
+    display: flex;
+    flex-direction: column;
+  }
+  .campo-cpf p-inputMask{
+    margin-bottom: 10px;
+  }
+
+  .titulo-venda{
+    text-align: center;
+    background-color: var(--roxo_escuro);
+    color: black;
+    padding: 5px;
+  }
+
+

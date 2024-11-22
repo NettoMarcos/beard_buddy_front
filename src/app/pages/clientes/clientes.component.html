@@ -1,0 +1,39 @@
+<p-table
+  [value]="clientes"
+  [paginator]="true"
+  [rows]="10"
+  [loading]="loading"
+  responsiveLayout="scroll"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>ID</th>
+      <th>Nome</th>
+      <th>CPF</th>
+      <th>Telefone</th>
+      <th>Data de Nascimento</th>
+      <th>ações</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-cliente>
+    <tr>
+      <td>{{ cliente.id }}</td>
+      <td>{{ cliente.nome }}</td>
+      <td>{{ cliente.cpf }}</td>
+      <td>{{ cliente.telefone }}</td>
+      <td>{{ cliente.dataNascimento | date : "dd/MM/yyyy" }}</td>
+      <td>
+        <button pButton icon="pi pi-pencil"></button>
+        <button pButton icon="pi pi-trash"></button>
+      </td>
+    </tr>
+  </ng-template>
+  
+</p-table>
+
+
+  
+
+
+
+

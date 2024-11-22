@@ -1,0 +1,73 @@
+.card-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; 
+    padding-top: 50px; 
+  }
+  
+  .card {
+    width: 100%;
+    max-width: 650px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+
+  }
+  
+  .card-header {
+    background-color: var(--cinza);
+    color: var(--cor_fonte);
+    padding: 20px;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .card-body {
+    padding: 20px;
+    color:var(--cor_fonte);
+    background-color: var(--cinza_escuro);
+    border-top: solid 1px var(--roxo_claro);
+    border-bottom: solid 1px var(--roxo_claro);
+  }
+  
+  .row {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+  }
+  
+  .col {
+    flex: 1;
+    padding: 10px;
+  }
+  
+  .card-footer {
+    background-color: var(--cinza);
+    color: var(--cor_fonte);
+    padding: 10px 20px;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  button {
+    background-color: var(--roxo_claro);
+    color: var(--cor_fonte);
+    padding: 10px 20px;
+    border: 1px solid var(--cinza_escuro);
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    display: block;
+    margin: 10px auto;
+    font-size: 1.1rem;
+  }
+  
+  button:hover {
+    background-color: var(--roxo_escuro);
+    border: 1px solid var(--cor_fonte);
+  }
+
+  i{
+    font-size: 25px;
+    margin-right: 5px;
+  }

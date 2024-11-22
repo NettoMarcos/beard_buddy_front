@@ -1,0 +1,50 @@
+
+  <p-tabView >
+    <p-tabPanel header="Produtos" >
+      <p-table [value]="produtos" [paginator]="true" [rows]="5" >
+        <ng-template pTemplate="header">
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Preço</th>
+            <th>Quantidade</th>
+            <th>Valor em Pontos</th>
+            <th>ações</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-produto>
+          <tr>
+            <td>{{ produto.id }}</td>
+            <td>{{ produto.nome }}</td>
+            <td>{{ produto.preco }}</td>
+            <td>{{ produto.quantidade }}</td>
+            <td>{{ produto.valorEmPontos }}</td>
+            <td><button pButton icon="pi pi-trash"></button> <button pButton icon="pi pi-pencil"></button></td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-tabPanel>
+
+    <p-tabPanel header="Serviços">
+      <p-table [value]="servicos" [paginator]="true" [rows]="5">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Preço</th>
+            <th>Valor em Pontos</th>
+            <th>ações</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-servico>
+          <tr>
+            <td>{{ servico.id }}</td>
+            <td>{{ servico.nome }}</td>
+            <td>{{ servico.preco }}</td>
+            <td>{{ servico.valorEmPontos }}</td>
+            <td><button pButton icon="pi pi-trash"></button> <button pButton icon="pi pi-pencil"></button></td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-tabPanel>
+  </p-tabView>

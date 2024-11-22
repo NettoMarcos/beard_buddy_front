@@ -1,13 +1,36 @@
 
-
-
 .logo{
-    width: 200px;
+    width: 180px;
+    margin-left: 27%;
+    cursor: pointer;
 }
 header{
-    background-color: rgb(50, 50, 50);
-    color: white;
+    background-color: var(--cinza_escuro);
+    color: #e1e1e1;
     padding: 10px;
     justify-content: center;
     display: flex;
+    border-bottom: 1px solid var(--roxo_claro);
+}
+
+nav ul{
+    padding: 5px;
+    display: flex;
+    list-style: none;
+    width: auto;
+    text-align: center;
+    cursor: pointer;
+}
+ul li{
+    background-color: var(--roxo_claro);
+    width: auto;
+    margin: 5px;
+    border: 1px solid var(--cinza_escuro);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+ul li:hover{
+    background-color: var(--roxo_escuro);
+    border: 1px solid var(--cor_fonte);
 }
