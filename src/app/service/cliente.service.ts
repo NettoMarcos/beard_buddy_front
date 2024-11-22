@@ -13,8 +13,8 @@ export interface ClienteDetalhesDTO {
 export interface ClienteCadastroDTO {
   nome: string;
   cpf: string;
-  telefone: string;
-  dataNascimento: Date;
+  telefone?: string;
+  dataNascimento?: Date;
 }
 
 export interface ClienteAtualizarDTO {

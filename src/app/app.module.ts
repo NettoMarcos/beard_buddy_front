@@ -27,6 +27,9 @@ import { ProdutosServicosComponent } from './pages/produtos-servicos/produtos-se
 import { FaturamentoComponent } from './pages/faturamento/faturamento.component';
 import { ClientesComponent } from './pages/clientes/clientes.component';
 
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,7 +58,8 @@ import { ClientesComponent } from './pages/clientes/clientes.component';
     InputMaskModule,
     TabViewModule,
     PaginatorModule,
-    DialogModule
+    DialogModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

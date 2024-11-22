@@ -18,6 +18,9 @@
     font-size: 1.1rem;
 }
 
+.p-dialog {
+    z-index: 9999 !important;  /* Aumente o z-index para garantir que a caixa de diálogo fique no topo */
+  }
 
 
 
