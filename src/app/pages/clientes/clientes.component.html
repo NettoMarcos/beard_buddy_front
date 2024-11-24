@@ -109,7 +109,7 @@
     </div>
     <div class="dialogo-input">
       <label for="dataNascimento">Data de Nascimento</label>
-      <input id="dataNascimento" formControlName="dataNascimento" type="date" />
+      <input id="dataNascimento" formControlName="dataNascimento" />
     </div>
     <button (click)="cadastrarCliente()" [disabled]="!formCadastro.valid" class="botão-pop_up">Salvar</button>
     <button (click)="fecharDialogCadastro()" class="botão-pop_up">Cancelar</button>
