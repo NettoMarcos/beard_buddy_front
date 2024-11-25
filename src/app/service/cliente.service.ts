@@ -54,4 +54,8 @@ export class ClienteService {
   excluirCliente(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/deletar/${id}`);
   }
+  
+  buscarPontos(cpf: string): Observable<{ pontos: number }> {
+    return this.http.get<{ pontos: number }>(`${this.baseUrl}/buscar-pontos/${cpf}`);
+  }
 }

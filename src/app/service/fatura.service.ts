@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 export interface FaturaCadastroDTO {
   cpfCliente: string;
   id_venda: number;
+  qtd_venda: number;
   tipo: string;
   pagoEmPontos: boolean;
 }
@@ -14,6 +15,7 @@ export interface FaturaDetalhesDTO {
   id: number;
   cpfCliente: string;
   id_venda: number;
+  qtd_venda: number
   tipo: string;
   dataPagamento: Date;
   valorFatura: number;
@@ -34,9 +36,9 @@ export class FaturaService {
   constructor(private http: HttpClient) {}
 
   // Método para cadastrar faturas
-  cadastrarFatura(faturas: FaturaCadastroDTO[]): Observable<FaturaDetalhesDTO[]> {
+  cadastrarFatura(faturas: FaturaCadastroDTO): Observable<FaturaCadastroDTO> {
     const url = `${this.baseUrl}/cadastrar`;
-    return this.http.post<FaturaDetalhesDTO[]>(url, faturas);
+    return this.http.post<FaturaCadastroDTO>(url, faturas);
   }
 
   // Método para listar as faturas

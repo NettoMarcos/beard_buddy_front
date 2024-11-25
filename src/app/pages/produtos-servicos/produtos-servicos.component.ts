@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProdutoCadastroDTO, ProdutoDetalhesDTO, ProdutoService } from 'src/app/service/produto.service';
-import { ServicoAtualizarDTO, ServicoCadastroDTO, ServicoDetalhesDTO, ServicoService } from 'src/app/service/servico.service';
+import { ServicoCadastroDTO, ServicoDetalhesDTO, ServicoService } from 'src/app/service/servico.service';
 
 @Component({
   selector: 'app-produtos-servicos',
@@ -24,7 +24,6 @@ export class ProdutosServicosComponent {
   exibirDialogoEditarProduto: boolean = false;
   produtoSelecionado!: ProdutoDetalhesDTO;
   exibirDialogoConfirmarEditarProduto:boolean = false;
-
 
   constructor(
     private produtoService: ProdutoService,
@@ -174,7 +173,7 @@ export class ProdutosServicosComponent {
         console.error('Erro ao cadastrar produto: ', err);
         alert('Erro ao cadastrar produto: ' + err);
       }
-    })
+    });
   }
 
   abrirDialogoEditarProduto(produto: ProdutoDetalhesDTO) {

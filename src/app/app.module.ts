@@ -15,6 +15,7 @@ import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
 import { InputTextModule } from 'primeng/inputtext';
 import {InputMaskModule} from 'primeng/inputmask';
+import { InputNumberModule } from 'primeng/inputnumber';
 import {TabViewModule} from 'primeng/tabview';
 import { PaginatorModule } from 'primeng/paginator';
 import { DialogModule } from 'primeng/dialog';
@@ -59,7 +60,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     TabViewModule,
     PaginatorModule,
     DialogModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    InputNumberModule
   ],
   providers: [],
   bootstrap: [AppComponent]

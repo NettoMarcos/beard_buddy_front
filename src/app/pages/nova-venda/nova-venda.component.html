@@ -6,20 +6,21 @@
 
     <div class="card-body">
       <form [formGroup]="faturaForm">
-        <!-- CPF do Cliente -->
+
         <div class="campo-cpf">
-          <label for="cpfCliente">CPF do Cliente</label>
-          <p-inputMask
-            id="cpfCliente"
-            formControlName="cpfCliente"
-            type="text"
-            placeholder="Digite o CPF do cliente"
-            mask="999.999.999-99"
-          ></p-inputMask>
+          <div>
+            <label for="cpfCliente">CPF do Cliente</label> 
+            <p-inputMask id="cpfCliente" formControlName="cpfCliente" type="text" placeholder="Digite o CPF do cliente"
+              mask="999.999.999-99" #cpfInput></p-inputMask>
+          </div>
+          <div>
+            <button class="button-cliente" (click)="buscarPontosCliente(cpfInput.value)"> Verificar Pontos</button>
+            <span>pontos do cliente: {{pontosCliente}}</span>
+          </div>
         </div>
-         <div class="titulo-venda">
-           <h3>Produtos</h3>
-         </div>
+        <div class="titulo-venda">
+          <h3>Produtos</h3>
+        </div>
         <div class="form-group">
           <p-table [value]="produtos" class="custom-table">
             <ng-template pTemplate="header">
@@ -27,6 +28,7 @@
                 <th>Nome</th>
                 <th>Preço</th>
                 <th>quantidade</th>
+                <th>valor em pontos</th>
                 <th>Ação</th>
               </tr>
             </ng-template>
@@ -35,14 +37,10 @@
                 <td>{{ produto.nome }}</td>
                 <td>{{ produto.preco | currency }}</td>
                 <td>{{produto.quantidade}}</td>
+                <td>{{produto.valorEmPontos}}</td>
                 <td>
-                  <button
-                    [disabled]="produto.quantidade === 0"
-                    pButton
-                    label="Adicionar"
-                    icon="pi pi-plus"
-                    (click)="adicionarItem(produto, 'produto')"
-                  ></button>
+                  <button [disabled]="produto.quantidade === 0 || itemSelecionado(produto.id, 'produto')" pButton
+                    label="Adicionar" icon="pi pi-plus" (click)="adicionarItem(produto, 'produto')"></button>
                 </td>
               </tr>
             </ng-template>
@@ -58,6 +56,7 @@
               <tr>
                 <th>Nome</th>
                 <th>Preço</th>
+                <th>valor em pontos</th>
                 <th>Ação</th>
               </tr>
             </ng-template>
@@ -65,13 +64,10 @@
               <tr>
                 <td>{{ servico.nome }}</td>
                 <td>{{ servico.preco | currency }}</td>
+                <td>{{servico.valorEmPontos}}</td>
                 <td>
-                  <button
-                    pButton
-                    label="Adicionar"
-                    icon="pi pi-plus"
-                    (click)="adicionarItem(servico, 'servico')"
-                  ></button>
+                  <button pButton [disabled]="itemSelecionado(servico.id, 'servico')" label="Adicionar"
+                    icon="pi pi-plus" (click)="adicionarItem(servico, 'servico')"></button>
                 </td>
               </tr>
             </ng-template>
@@ -88,6 +84,7 @@
                 <th>Nome</th>
                 <th>Tipo</th>
                 <th>Preço</th>
+                <th>quantidade</th>
                 <th>Ação</th>
               </tr>
             </ng-template>
@@ -97,35 +94,36 @@
                 <td>{{ item.tipo === "produto" ? "Produto" : "Serviço" }}</td>
                 <td>{{ item.preco | currency }}</td>
                 <td>
-                  <button
-                    pButton
-                    icon="pi pi-times"
-                    (click)="removerItem(i)"
-                  ></button>
+                  <button pButton icon="pi pi-minus" class="botao-quantidade" (click)="alterarQuantidade(item, -1)"
+                    [disabled]="item.qtd_venda <= 1"></button>
+                  <span class="quantidade">{{ item.qtd_venda }}</span>
+                  <button pButton icon="pi pi-plus" class="botao-quantidade" (click)="alterarQuantidade(item, 1)"
+                    [disabled]="getQuantidadeDisponivel(item.id, item.tipo, item.qtd_venda)"></button>
+                </td>
+                <td>
+                  <button pButton icon="pi pi-times" (click)="removerItem(i)"></button>
                 </td>
               </tr>
             </ng-template>
           </p-table>
         </div>
 
-        <div >
+        <div class="valores-totais">
           <h3>Valor Total: {{ valorTotal | currency }}</h3>
+          <h3>Valor Total Em Pontos: {{valorTotalEmPontos}}</h3>
         </div>
 
-  
+
         <div class="card-footer">
-          <button
-            pButton
-            label="Cadastrar Venda"
-            icon="pi pi-check"
-            (click)="cadastrarFatura()"
-          ></button>
-          <button
-          pButton
-          label="Comprar com pontos"
-          icon="pi pi-check"
-          class="botao-footer"
-        ></button>
+          <button pButton label="Cadastrar Venda" icon="pi pi-check" (click)="cadastrarFatura()"></button>
+          <button 
+            pButton 
+            label="Comprar com pontos" 
+            icon="pi pi-check" 
+            class="botao-footer"
+            [disabled]="pontosCliente === 0 || pontosCliente < valorTotalEmPontos || valorTotalEmPontos === 0"
+            (click)="comprarComPontos()">
+          </button>
         </div>
       </form>
     </div>
