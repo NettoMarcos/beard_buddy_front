@@ -7,23 +7,26 @@ export interface ProdutoDetalhesDTO {
   id: number;
   nome: string;
   preco: number;
-  quantidade: number;
   valorEmPontos: number;
+  estoque: number;
+  valorComprado: number;
 }
 
 export interface ProdutoCadastroDTO {
   nome: string;
   preco: number;
-  quantidade?: number;
   valorEmPontos?: number;
+  estoque: number;
+  valorComprado: number;
 }
 
 export interface ProdutoAtualizarDTO {
   id: number;
   nome?: string;
   preco?: number;
-  quantidade?: number;
   valorEmPontos?: number;
+  estoque?: number;
+  valorComprado?: number;
 }
 
 @Injectable({
@@ -51,8 +54,8 @@ export class ProdutoService {
   }
 
   // Atualizar Produto
-  atualizarProduto(dto: ProdutoAtualizarDTO): Observable<ProdutoAtualizarDTO> {
-    return this.http.put<ProdutoAtualizarDTO>(`${this.apiUrl}/atualizar`, dto);
+  atualizarProduto(dto: ProdutoAtualizarDTO): Observable<ProdutoDetalhesDTO> {
+    return this.http.put<ProdutoDetalhesDTO>(`${this.apiUrl}/atualizar`, dto);
   }
 
   // Excluir Produto

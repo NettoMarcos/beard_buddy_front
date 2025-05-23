@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ProdutoCadastroDTO, ProdutoDetalhesDTO, ProdutoService } from 'src/app/service/produto.service';
-import { ServicoCadastroDTO, ServicoDetalhesDTO, ServicoService } from 'src/app/service/servico.service';
+import { ProdutoAtualizarDTO, ProdutoCadastroDTO, ProdutoDetalhesDTO, ProdutoService } from 'src/app/service/produto.service';
+import { ServicoAtualizarDTO, ServicoCadastroDTO, ServicoDetalhesDTO, ServicoService } from 'src/app/service/servico.service';
 
 @Component({
   selector: 'app-produtos-servicos',
@@ -13,6 +13,7 @@ export class ProdutosServicosComponent {
   produtos: ProdutoDetalhesDTO[] = [];
   servicos: ServicoDetalhesDTO[] = [];
   formCadastroServico!: FormGroup;
+  formEditarServico!: FormGroup;
   exibirDialogCadastroServico: boolean = false;
   exibirDialogEditarServico: boolean = false;
   id?: number;
@@ -21,6 +22,7 @@ export class ProdutosServicosComponent {
   exibirDialogDeletarServico: boolean = false;
   exibirDialogCadastroProduto: boolean = false;
   formCadastroProduto!: FormGroup;
+  formEditarProduto!: FormGroup;
   exibirDialogoEditarProduto: boolean = false;
   produtoSelecionado!: ProdutoDetalhesDTO;
   exibirDialogoConfirmarEditarProduto:boolean = false;
@@ -36,18 +38,20 @@ export class ProdutosServicosComponent {
     this.carregarServicos();
     this.iniciarFormCadastroServico();
     this.iniciarFormCadastroProduto();
+    this.iniciarFormEditarServico();
+    this.iniciarFormEditarProduto();
   }
 
   carregarProdutos(): void {
     this.produtoService.listarProdutos().subscribe(data => {
-      this.produtos = data.content || [];
+      this.produtos = data || [];
     });
   }
 
   carregarServicos(): void {
     // Substitua pela lógica de carregamento de serviços
     this.servicoService.listarServicos().subscribe(data => {
-      this.servicos = data.content || [];
+      this.servicos = data || [];
     })
   }
 
@@ -62,6 +66,15 @@ export class ProdutosServicosComponent {
       valorEmPontos: ['']
     })
   }
+  
+ iniciarFormEditarServico() {
+  this.formEditarServico = this.fb.group({
+    id: [''],
+    nome: [''],
+    preco: [''],
+    valorEmPontos: ['']
+  });
+}
 
   fecharDialogCadastrarServico() {
     this.exibirDialogCadastroServico = false;
@@ -91,8 +104,7 @@ export class ProdutosServicosComponent {
   }
 
   abrirDialogoEditarServico(servico: ServicoDetalhesDTO) {
-    this.servicoSelecionado = { ...servico }
-    this.formCadastroServico.patchValue(this.servicoSelecionado);
+    this.formEditarServico.patchValue(servico);
     this.exibirDialogEditarServico = true;
   }
 
@@ -102,22 +114,27 @@ export class ProdutosServicosComponent {
 
 
   atualizarServico() {
-    if (this.formCadastroServico.valid && this.servicoSelecionado) {
-      const servicoAtualizado = {
-        ...this.servicoSelecionado,
-        ...this.formCadastroServico.value
+    console.log(this.formEditarServico.value)
+   
+      const servicoAtualizado: ServicoAtualizarDTO = {
+        id: this.formEditarServico.value.id,
+        nome: this.formEditarServico.value.nome,
+        preco: this.formEditarServico.value.preco,
+        valorEmPontos: this.formEditarServico.value.valorEmPontos
       };
-      this.exibirDialogoConfirmacaoEdicaoServico = false;
+
+      
+      
       this.servicoService.atualizarServico(servicoAtualizado).subscribe({
         next: () => {
           this.carregarServicos();
           this.fecharDialogEditarServico();
+          this.exibirDialogoConfirmacaoEdicaoServico = false;
         },
         error: (err) => {
           console.error('Erro ao atualizar serviço: ', err);
         }
       })
-    }
   }
   confirmarDelecaoServico() {
     if (this.servicoSelecionado) {
@@ -135,6 +152,8 @@ export class ProdutosServicosComponent {
     this.exibirDialogDeletarServico = true;
   }
 
+  //Funções para produtos
+
   abrirDialogoCadastrarProduto() {
     this.exibirDialogCadastroProduto = true;
   }
@@ -143,7 +162,18 @@ export class ProdutosServicosComponent {
     this.formCadastroProduto = this.fb.group({
       nome: ['', Validators.required],
       preco: ['', Validators.required],
-      quantidade: [''],
+      valorComprado: ['', Validators.required],
+      estoque: ['',Validators.required],
+      valorEmPontos: ['',]
+    })
+  }
+  iniciarFormEditarProduto() {
+    this.formEditarProduto = this.fb.group({
+      id: [''],
+      nome: [''],
+      preco: [''],
+      valorComprado: [''],
+      estoque: [''],
       valorEmPontos: ['']
     })
   }
@@ -159,8 +189,9 @@ export class ProdutosServicosComponent {
     const servico: ProdutoCadastroDTO = {
       nome: this.formCadastroProduto.value.nome,
       preco: this.formCadastroProduto.value.preco,
-      quantidade: this.formCadastroProduto.value.quantidade || 0,
-      valorEmPontos: this.formCadastroProduto.value.valorEmPontos || 0
+      valorEmPontos: this.formCadastroProduto.value.valorEmPontos,
+      estoque: this.formCadastroProduto.value.estoque,
+      valorComprado: this.formCadastroProduto.value.valorComprado 
     }
 
     this.exibirDialogCadastroProduto = false;
@@ -177,25 +208,32 @@ export class ProdutosServicosComponent {
   }
 
   abrirDialogoEditarProduto(produto: ProdutoDetalhesDTO) {
-    this.produtoSelecionado = { ...produto }
-    this.formCadastroProduto.patchValue(this.produtoSelecionado);
-    this.exibirDialogoEditarProduto = true;
+  if (!this.formEditarProduto) {
+    this.iniciarFormEditarProduto();
   }
+  
+  this.formEditarProduto.patchValue(produto);
+  
+  this.exibirDialogoEditarProduto = true;
+}
 
   fecharDialogEditarProduto(){
     this.exibirDialogoEditarProduto = false;
   }
 
   atualizarProduto(){
-    if(this.formCadastroProduto.valid && this.produtoSelecionado){
-      const produtoAtualizado = {
-        ...this.produtoSelecionado,
-        ...this.formCadastroProduto.value
+      const produtoAtualizado : ProdutoAtualizarDTO = {
+        id: this.formEditarProduto.value.id,
+        nome: this.formEditarProduto.value.nome,
+        preco: this.formEditarProduto.value.preco,
+        valorComprado: this.formEditarProduto.value.valorComprado,
+        estoque: this.formEditarProduto.value.estoque,
+        valorEmPontos: this.formEditarProduto.value.valorEmPontos
       };
-      console.log(produtoAtualizado)
       
       this.produtoService.atualizarProduto(produtoAtualizado).subscribe({
-        next: () =>{
+        next: (res) =>{
+          console.log(res)
           this.carregarProdutos();
           this.fecharDialogConfirmarEdicaoProduto();
           this.fecharDialogEditarProduto();
@@ -204,7 +242,6 @@ export class ProdutosServicosComponent {
           console.error('Erro ao atualizar produto: ', err)
         }
       });
-    }
   }
 
   fecharDialogConfirmarEdicaoProduto(){

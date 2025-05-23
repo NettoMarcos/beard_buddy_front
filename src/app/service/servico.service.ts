@@ -53,6 +53,6 @@ export class ServicoService {
 
   // Excluir Serviço
   excluirServico(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/atualizar/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/deletar/${id}`);
   }
 }

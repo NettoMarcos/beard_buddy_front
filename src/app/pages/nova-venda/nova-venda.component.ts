@@ -150,7 +150,7 @@ export class NovaVendaComponent {
 
   getQuantidadeDisponivel(id: number, tipo: string, qtd_venda: number): boolean {
     const produto = this.produtos.find(produto => produto.id === id);
-    if (produto && qtd_venda >= produto.quantidade && tipo === 'produto') {
+    if (produto && qtd_venda >= produto.estoque && tipo === 'produto') {
       return true;
     }
     return false;

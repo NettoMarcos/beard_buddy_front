@@ -8,7 +8,8 @@
           <th>ID</th>
           <th>Nome</th>
           <th>Preço</th>
-          <th>Quantidade</th>
+          <th>Valor Comprado</th>
+          <th>Estoque</th>
           <th>Valor em Pontos</th>
           <th>ações</th>
         </tr>
@@ -17,8 +18,10 @@
         <tr>
           <td>{{ produto.id }}</td>
           <td>{{ produto.nome }}</td>
-          <td>{{ produto.preco }}</td>
-          <td>{{ produto.quantidade }}</td>
+          <td>{{ produto.preco | currency: 'BRL' }}</td>
+    
+          <td>{{produto.valorComprado | currency: 'BRL'}}</td>
+          <td>{{ produto.estoque}}</td>
           <td>{{ produto.valorEmPontos }}</td>
           <td><button pButton icon="pi pi-trash"></button> <button pButton icon="pi pi-pencil" (click)="abrirDialogoEditarProduto(produto)"></button></td>
         </tr>
@@ -27,7 +30,7 @@
   </p-tabPanel>
 
   <p-tabPanel header="Serviços">
-    <button pButton label="Cadastrar Novo produto" icon="pi pi-plus" (click)="abrirDialogoCadastrarProduto()"
+    <button pButton label="Cadastrar Novo Serviço" icon="pi pi-plus" (click)="abrirDialogoCadastrarServico()"
       class="botão-pop_up"></button>
     <p-table [value]="servicos" [paginator]="true" [rows]="5">
       <ng-template pTemplate="header">
@@ -43,7 +46,7 @@
         <tr>
           <td>{{ servico.id }}</td>
           <td>{{ servico.nome }}</td>
-          <td>{{ servico.preco | currency : "R$"}}</td>
+          <td>{{ servico.preco | currency : "BRL"}}</td>
           <td>{{ servico.valorEmPontos }}</td>
           <td><button pButton icon="pi pi-trash" (click)="abrirDialogoExcluirServico(servico)"></button> <button pButton icon="pi pi-pencil" (click)="abrirDialogoEditarServico(servico)"></button></td>
         </tr>
@@ -55,7 +58,7 @@
 
 <!-- dialogo servico -->
 
-<p-dialog [(visible)]="exibirDialogEditarServico" [modal]="true" [closable]="false" [style]="{width: '50vw'}">
+<p-dialog [(visible)]="exibirDialogCadastroServico" [modal]="true" [closable]="false" [style]="{width: '50vw'}">
   <h2>Cadastrar Serviço</h2>
   <form [formGroup]="formCadastroServico">
     <div class="dialogo-input">
@@ -77,10 +80,11 @@
 
 <p-dialog [(visible)]="exibirDialogEditarServico" [modal]="true" [closable]="false" [style]="{width: '50vw'}">
   <h2>Editar Serviço</h2>
-  <form [formGroup]="formCadastroServico">
+  <form [formGroup]="formEditarServico">
+    <h3>id: {{formEditarServico.value.id}}</h3>
     <div class="dialogo-input">
       <label for="nome">Nome</label>
-      <input id="nome" formControlName="nome" type="text" />
+      <input id="nome" formControlName="nome" type="text"/>
     </div>
     <div class="dialogo-input">
       <label for="preco">Preço</label>
@@ -90,7 +94,7 @@
       <label for="valorEmPontos">Valor em Pontos</label>
       <input id="valorEmPontos" formControlName="valorEmPontos" type="text" />
     </div>
-    <button (click)="exibirDialogoConfirmacaoEdicaoServico = true" [disabled]="!formCadastroServico.valid" class="botão-pop_up">Salvar</button>
+    <button (click)="exibirDialogoConfirmacaoEdicaoServico = true" [disabled]="!formEditarServico.valid" class="botão-pop_up">Salvar</button>
     <button (click)="fecharDialogEditarServico()" class="botão-pop_up">Cancelar</button>
   </form>
 </p-dialog>
@@ -129,7 +133,7 @@
 <!-- dialogos produto -->
 
 <p-dialog [(visible)]="exibirDialogCadastroProduto" [modal]="true" [closable]="false" [style]="{width: '50vw'}">
-  <h2>Cadastrar Serviço</h2>
+  <h2>Cadastrar Produto</h2>
   <form [formGroup]="formCadastroProduto">
     <div class="dialogo-input">
       <label for="nome">Nome</label>
@@ -140,8 +144,12 @@
       <input id="preco" formControlName="preco" type="text" />
     </div>
     <div class="dialogo-input">
-      <label for="quantidade">Quantidade</label>
-      <input id="quantidade" formControlName="quantidade" type="text" />
+      <label for="valorComprado">Valor Comprado</label>
+      <input id="valorComprado" formControlName="valorComprado" type="text" />
+    </div>
+    <div class="dialogo-input">
+      <label for="estoque">Estoque</label>
+      <input id="estoque" formControlName="estoque" type="text" />
     </div>
     <div class="dialogo-input">
       <label for="valorEmPontos">Valor em Pontos</label>
@@ -154,7 +162,7 @@
 
 <p-dialog [(visible)]="exibirDialogoEditarProduto" [modal]="true" [closable]="false" [style]="{width: '50vw'}">
   <h2>Editar Produto</h2>
-  <form [formGroup]="formCadastroProduto">
+  <form [formGroup]="formEditarProduto">
     <div class="dialogo-input">
       <label for="nome">Nome</label>
       <input id="nome" formControlName="nome" type="text" />
@@ -164,14 +172,18 @@
       <input id="preco" formControlName="preco" type="text" />
     </div>
     <div class="dialogo-input">
-      <label for="quantidade">Quantidade</label>
-      <input id="quantidade" formControlName="quantidade" type="text" />
+      <label for="valorComprado">Valor Comprado</label>
+      <input id="valorComprado" formControlName="valorComprado" type="text" />
+    </div>
+    <div class="dialogo-input">
+      <label for="estoque">Estoque</label>
+      <input id="estoque" formControlName="estoque" type="text" />
     </div>
     <div class="dialogo-input">
       <label for="valorEmPontos">Valor em Pontos</label>
       <input id="valorEmPontos" formControlName="valorEmPontos" type="text" />
     </div>
-    <button (click)="exibirDialogoConfirmarEditarProduto = true" [disabled]="!formCadastroProduto.valid" class="botão-pop_up">Salvar</button>
+    <button (click)="exibirDialogoConfirmarEditarProduto = true" [disabled]="!formEditarProduto.valid" class="botão-pop_up">Salvar</button>
     <button (click)="fecharDialogEditarProduto()" class="botão-pop_up">Cancelar</button>
   </form>
 </p-dialog>
