@@ -19,26 +19,33 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import {TabViewModule} from 'primeng/tabview';
 import { PaginatorModule } from 'primeng/paginator';
 import { DialogModule } from 'primeng/dialog';
+import { DividerModule } from 'primeng/divider';
 
 
 import { NovaVendaComponent } from './pages/nova-venda/nova-venda.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ProdutosServicosComponent } from './pages/produtos-servicos/produtos-servicos.component';
-import { FaturamentoComponent } from './pages/faturamento/faturamento.component';
+import { ItensComponent } from './pages/itens/itens.component';
+import { FaturamentoComponent } from './pages/faturas/faturamento.component';
 import { ClientesComponent } from './pages/clientes/clientes.component';
+
+//pipes
+import { CpfPipe } from './shared/pipes/cpf.pipe';
+import { TelefonePipe } from './shared/pipes/telefone.pipe';
 
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BuddyChatComponent } from './components/buddy-chat/buddy-chat.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     HeaderComponent,
+    BuddyChatComponent,
     FooterComponent,
     NovaVendaComponent,
-    ProdutosServicosComponent,
+    ItensComponent,
     FaturamentoComponent,
     ClientesComponent
   ],
@@ -61,7 +68,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     PaginatorModule,
     DialogModule,
     BrowserAnimationsModule,
-    InputNumberModule
+    InputNumberModule,
+    DividerModule,
+    CpfPipe,
+    TelefonePipe,
   ],
   providers: [],
   bootstrap: [AppComponent]

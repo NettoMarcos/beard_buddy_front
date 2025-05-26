@@ -16,12 +16,12 @@ export interface ChatBotResponse {
 })
 export class ChatBotService {
 
-  private baseUrl = 'https://workflow.hospcom.net/webhook-test/iaproject'; 
+  private baseUrl = 'https://workflowwebhook.hospcom.net/webhook/iaproject'; 
 
   constructor(private http: HttpClient) { }
 
-  enviarMensagem(message: ChatBotMessage): Observable<ChatBotResponse>{
-    return this.http.post<ChatBotResponse>(this.baseUrl, message);
-  }
+ enviarMensagem(message: ChatBotMessage): Observable<string> {
+  return this.http.post(this.baseUrl, message, { responseType: 'text' });
+}
 }
   

@@ -1,0 +1,146 @@
+<p-table [value]="faturas" [paginator]="true" [rows]="7">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>ID</th>
+      <th>Data Geração</th>
+      <th>Valor Total</th>
+
+      <th>Ações</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-fatura>
+    <tr>
+      <td>{{ fatura.id }}</td>
+      <td>{{ fatura.dataGeracao | date : "dd/MM/yyyy HH:mm" }}</td>
+      <td>{{ fatura.valorTotal | currency : "BRL" }}</td>
+      <td>
+        <button
+          pButton
+          icon="pi pi-trash"
+          (click)="abrirDialogDeletar(fatura)"
+        ></button>
+        <button
+          pButton
+          icon="pi pi-eye"
+          (click)="abrirDialogoFatura(fatura)"
+        ></button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<!-- Dialog para Confirmação de Deleção -->
+<p-dialog
+  [(visible)]="exibirDialogDeletar"
+  header="Confirmar Exclusão"
+  [modal]="true"
+  [closable]="false"
+  [style]="{ width: '300px' }"
+>
+  <p>Tem certeza de que deseja excluir a fatura</p>
+  <div class="p-dialog-footer">
+    <button
+      pButton
+      label="Não"
+      (click)="fecharDialogDeletar()"
+      class="botão-pop_up"
+    ></button>
+    <button
+      pButton
+      label="Sim"
+      (click)="confirmarDelecao()"
+      class="botão-pop_up"
+    ></button>
+  </div>
+</p-dialog>
+
+<!-- Dialog para informações extras da fatura-->
+
+<p-dialog
+  [(visible)]="exibirDialogFatura"
+  header="Fatura"
+  [modal]="true"
+  [closable]="false"
+  [style]="{ width: '50vw', maxWidth: '800px' }"
+  [contentStyle]="{ 'max-height': '80vh', overflow: 'auto' }"
+  class="dialog-fatura"
+>
+  <section *ngIf="faturaSelecionada" class="fatura-detalhes">
+
+    <div class="identity">
+      <h3 >ID: {{ faturaSelecionada.id }}</h3>
+      <p>
+        <strong>Data de Geração:</strong>
+        {{ faturaSelecionada.dataGeracao | date : "dd/MM/yyyy HH:mm" }}
+      </p>
+    </div>
+
+    <div class="col-12 md:col-6 mb-5" *ngIf="faturaSelecionada?.cliente?.cpf">
+      <h4>Cliente</h4>
+      <p><strong>Nome:</strong> {{ faturaSelecionada.cliente.nome }}</p>
+      <p><strong>CPF:</strong> {{ faturaSelecionada.cliente.cpf | cpf }}</p>
+      <p>
+        <strong>Telefone:</strong>
+        {{ faturaSelecionada.cliente.telefone | telefone }}
+      </p>
+      <hr class="divider" />
+    </div>
+
+    <div class="itens-vendidos">
+      <h4>Itens Vendidos</h4>
+      <div
+        class="itens-container"
+        [style]="{ 'max-height': '300px', overflow: 'auto' }"
+      >
+        <p-table
+          [value]="faturaSelecionada.itensVendidos"
+          [scrollable]="true"
+          scrollHeight="300px"
+        >
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Item</th>
+              <th>Quantidade</th>
+              <th>Preço Unit.</th>
+              <th>Valor Total</th>
+              <th>Lucro</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-item>
+            <tr>
+              <td>{{ item.Item.nome }}</td>
+              <td>{{ item.quantidade }}</td>
+              <td>{{ item.Item.preco | currency : "BRL" }}</td>
+              <td>{{ item.valorTotal | currency : "BRL" }}</td>
+              <td>{{ item.lucroTotal | currency : "BRL" }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+      <hr class="divider" />
+    </div>
+
+
+    <h4 class="identity">Resumo</h4>
+    <div class="resumo">
+      
+      <p>
+        <strong>Valor Total:</strong>
+        {{ faturaSelecionada.valorTotal | currency : "BRL" }}
+      </p>
+      <p>
+        <strong>Lucro Total:</strong>
+        {{ faturaSelecionada.lucroTotal | currency : "BRL" }}
+      </p>
+    </div>
+
+    <div class="flex justify-content-end mt-3">
+      <button
+        pButton
+        label="Fechar"
+        (click)="fecharDialogFatura()"
+        class="botão-pop_up"
+      ></button>
+    </div>
+  </section>
+</p-dialog>

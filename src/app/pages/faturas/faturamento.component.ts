@@ -12,6 +12,7 @@ export class FaturamentoComponent {
   faturas: FaturaDetalhesDTO[] = [];
   mostrardialogo: boolean = false;
   exibirDialogDeletar: boolean = false
+  exibirDialogFatura: boolean = false;
   faturaSelecionada!: FaturaDetalhesDTO;
 
   constructor(private faturaService: FaturaService) {}
@@ -47,6 +48,18 @@ export class FaturamentoComponent {
   }
 
   fecharDialogDeletar(): void {
+    this.faturaSelecionada = null!;
     this.exibirDialogDeletar = false;
+  }
+
+  abrirDialogoFatura(fatura: FaturaDetalhesDTO): void {
+    this.faturaSelecionada = fatura;
+    this.exibirDialogFatura = true;
+    console.log(fatura);
+  }
+
+  fecharDialogFatura(): void {
+    this.faturaSelecionada = null!;
+    this.exibirDialogFatura = false;
   }
 }

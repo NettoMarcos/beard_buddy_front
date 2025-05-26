@@ -1,0 +1,21 @@
+
+<div class="chat-widget" [class.open]="isOpen">
+  <div class="chat-header" (click)="toggleChat()">💬 Buddy</div>
+
+  <div class="chat-body" *ngIf="isOpen">
+    <div class="chat-messages">
+      <div *ngFor="let message of messages" class="message">{{ message }}</div>
+      <div *ngIf="isLoading" class="typing-indicator">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+
+    <input
+      type="text"
+      [(ngModel)]="inputMessage"
+      (keydown.enter)="sendMessage()"
+      [disabled]="isLoading"
+      placeholder="Digite sua mensagem..."
+    />
+  </div>
+</div>

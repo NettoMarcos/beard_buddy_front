@@ -10,20 +10,20 @@
       <div class="row">
         <!-- Faturamento Serviços -->
         <div class="col">
-          <p><strong>Total Faturado em Serviços:</strong> R${{servicoTotalMes?.somaTotal | currency}}</p>
+          <p><strong>Lucro liquido:</strong>{{lucroLiquidoMes | currency: 'BRL'}}</p>
         </div>
 
         <!-- Faturamento Produtos -->
         <div class="col" >
-          <p><strong>Total Faturado em Produtos:</strong> R${{produtoTotalMes?.somaTotal | currency}}</p>
+          <p><strong>Lucro bruto:</strong>{{lucroBrutoMes | currency: 'BRL'}}</p>
         </div>
       </div>
     </div>
 
     <!-- Card Footer (Total Geral) -->
-    <div class="card-footer" >
+    <!-- <div class="card-footer" >
       <p><strong>Total Geral:</strong> R${{valorTotalMes?.somaTotal | currency}} </p>
-    </div>
+    </div> -->
 
     <!-- Botão para Registrar Nova Venda -->
     <div class="card-footer">
@@ -31,3 +31,5 @@
     </div>
   </div>
 </div>
+
+

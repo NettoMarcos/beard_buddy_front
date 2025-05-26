@@ -3,23 +3,34 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-export interface FaturaCadastroDTO {
-  cpfCliente: string;
-  id_venda: number;
-  qtd_venda: number;
-  tipo: string;
-  pagoEmPontos: boolean;
-}
 
 export interface FaturaDetalhesDTO {
   id: number;
-  cpfCliente: string;
-  id_venda: number;
-  qtd_venda: number
-  tipo: string;
-  dataPagamento: Date;
-  valorFatura: number;
-
+  dataGeracao: Date;
+  valorTotal: number;
+  lucroTotal: number;
+  cliente: {
+    id: number;
+    nome: string;
+    cpf: string;
+    telefone: string;
+    dataNascimento: Date;
+    pontos: number;
+  };
+  itensVendidos: Array<{
+    id: number;
+    Item: {
+      id: number;
+      nome: string;
+      preco: number;
+      valorEmPontos: number;
+      estoque: number;
+      valorComprado: number;
+    };
+    quantidade: number;
+    valorTotal: number;
+    lucroTotal: number;
+  }>
 }
 
 export interface FaturaValorTotalDTO {
@@ -35,15 +46,10 @@ export class FaturaService {
 
   constructor(private http: HttpClient) {}
 
-  // Método para cadastrar faturas
-  cadastrarFatura(faturas: FaturaCadastroDTO): Observable<FaturaCadastroDTO> {
-    const url = `${this.baseUrl}/cadastrar`;
-    return this.http.post<FaturaCadastroDTO>(url, faturas);
-  }
 
   // Método para listar as faturas
-  listarFaturas(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/listar`);
+  listarFaturas(): Observable<FaturaDetalhesDTO[]> {
+    return this.http.get<FaturaDetalhesDTO[]>(`${this.baseUrl}/listar`);
   }
 
   // Método para buscar fatura por ID
@@ -59,20 +65,14 @@ export class FaturaService {
   }
 
   // Método para obter o valor total das faturas do mês atual
-  obterValorTotalFaturasMesAtual(): Observable<FaturaValorTotalDTO> {
-    const url = `${this.baseUrl}/total-mes`;
-    return this.http.get<FaturaValorTotalDTO>(url);
+  obterLucroLiquidoMes(): Observable<number> {
+    const url = `${this.baseUrl}/lucro_liquido_mes`;
+    return this.http.get<number>(url);
   }
 
   // Método para obter o valor total das faturas de produto do mês atual
-  obterValorTotalFaturasProdutoMesAtual(): Observable<FaturaValorTotalDTO> {
-    const url = `${this.baseUrl}/total-mes/produto`;
-    return this.http.get<FaturaValorTotalDTO>(url);
-  }
-
-  // Método para obter o valor total das faturas de serviço do mês atual
-  obterValorTotalFaturasServicoMesAtual(): Observable<FaturaValorTotalDTO> {
-    const url = `${this.baseUrl}/total-mes/servico`;
-    return this.http.get<FaturaValorTotalDTO>(url);
+  obterLucroBrutoMes(): Observable<number> {
+    const url = `${this.baseUrl}/lucro_bruto_mes`;
+    return this.http.get<number>(url);
   }
 }

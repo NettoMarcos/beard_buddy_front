@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ClienteService } from 'src/app/service/cliente.service';
-import { FaturaCadastroDTO, FaturaService } from 'src/app/service/fatura.service';
+import { ItemVemdidoService } from 'src/app/service/item-vemdido.service';
+import { itemVendidoCadastroDTO } from 'src/app/service/item-vemdido.service';
 import { ProdutoDetalhesDTO, ProdutoService } from 'src/app/service/produto.service';
 import { ServicoDetalhesDTO, ServicoService } from 'src/app/service/servico.service';
 
@@ -30,7 +31,7 @@ export class NovaVendaComponent {
     private produtoService: ProdutoService,
     private servicoService: ServicoService,
     private clienteService: ClienteService,
-    private faturaService: FaturaService,
+    private itemVendidoService: ItemVemdidoService,
     private router: Router
   ) {
     this.faturaForm = new FormGroup({
@@ -48,13 +49,13 @@ export class NovaVendaComponent {
 
   carregarProdutos(): void {
     this.produtoService.listarProdutos().subscribe(response => {
-      this.produtos = response.content;
+      this.produtos = response;
     });
   }
 
   carregarServicos(): void {
     this.servicoService.listarServicos().subscribe(response => {
-      this.servicos = response.content;
+      this.servicos = response;
     });
   }
 
@@ -87,53 +88,48 @@ export class NovaVendaComponent {
     )
   }
 
-  cadastrarFatura(): void {
+  cadastrarItensVendidos(): void {
     if (this.itensSelecionados.length === 0) {
       alert('Por favor, selecione ao menos um produto ou serviço.');
       return;
     }
+    const itensVendidos: itemVendidoCadastroDTO[] = this.itensSelecionados.map(item => ({
+      itemId: item.id,
+      quantidade: item.qtd_venda
+    }));
 
-    this.itensSelecionados.forEach(item => {
+      console.log('cpf:', this.cpfCliente);
+
+    if (this.cpfCliente != '') {
+      const cpf_formatado = this.formatarCPF(this.cpfCliente);
       
-      const fatura: FaturaCadastroDTO = {
-        cpfCliente: this.formatarCPF(this.faturaForm.value.cpfCliente),
-        tipo: item.tipo.toUpperCase(),
-        id_venda: item.id,
-        qtd_venda: item.qtd_venda,
-        pagoEmPontos: false
-      };
-      this.faturaService.cadastrarFatura(fatura).subscribe(response => {
-        console.log(`Fatura para ${item.nome} cadastrada com sucesso!`, response);
-      }, error => {
-        console.error(`Erro ao cadastrar fatura para ${item.nome}`, error);
-      });
-    });
 
-    this.router.navigate(['home']);
-  }
-  comprarComPontos(): void {
-    if (this.itensSelecionados.length === 0) {
-      alert('Por favor, selecione ao menos um produto ou serviço.');
-      return;
+      this.itemVendidoService.cadastrarItensVendidoComCpf(itensVendidos, cpf_formatado).subscribe({
+        next:(resp) => {
+          console.log('Itens vendidos cadastrados com sucesso:', resp);
+          this.router.navigate(['/faturamento']);
+        },
+        error: (err) => {
+          console.error('Erro ao cadastrar itens vendidos:', err);
+          alert('Erro ao cadastrar itens vendidos: ' + err);
+        },
+      });
+      
+    }else{
+      this.itemVendidoService.cadastrarItensVendido(itensVendidos).subscribe({
+        next:(resp) => {
+          console.log('Itens vendidos cadastrados com sucesso:', resp);
+          this.router.navigate(['/faturamento']);
+        },
+        error: (err) => {
+          console.error('Erro ao cadastrar itens vendidos:', err);
+          alert('Erro ao cadastrar itens vendidos: ' + err);
+        },
+      });
     }
+    
 
-    this.itensSelecionados.forEach(item => {
-      
-      const fatura: FaturaCadastroDTO = {
-        cpfCliente: this.formatarCPF(this.faturaForm.value.cpfCliente),
-        tipo: item.tipo.toUpperCase(),
-        id_venda: item.id,
-        qtd_venda: item.qtd_venda,
-        pagoEmPontos: true
-      };
-      this.faturaService.cadastrarFatura(fatura).subscribe(response => {
-        console.log(`Fatura para ${item.nome} cadastrada com sucesso!`, response);
-      }, error => {
-        console.error(`Erro ao cadastrar fatura para ${item.nome}`, error);
-      });
-    });
 
-    this.router.navigate(['home']);
   }
 
   alterarQuantidade(item: { qtd_venda: number }, delta: number): void {

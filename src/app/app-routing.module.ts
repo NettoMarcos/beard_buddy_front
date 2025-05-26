@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { NovaVendaComponent } from './pages/nova-venda/nova-venda.component';
-import { ProdutosServicosComponent } from './pages/produtos-servicos/produtos-servicos.component';
-import { FaturamentoComponent } from './pages/faturamento/faturamento.component';
+import { ItensComponent } from './pages/itens/itens.component';
+import { FaturamentoComponent } from './pages/faturas/faturamento.component';
 import { ClientesComponent } from './pages/clientes/clientes.component';
 
 const routes: Routes = [
@@ -19,8 +19,8 @@ const routes: Routes = [
     component: NovaVendaComponent
   },
   {
-    path: 'produtos-servicos',
-    component: ProdutosServicosComponent
+    path: 'itens',
+    component: ItensComponent
   },
   {
     path: 'faturamento',

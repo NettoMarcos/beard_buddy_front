@@ -10,10 +10,9 @@ import { FaturaService, FaturaValorTotalDTO } from 'src/app/service/fatura.servi
 })
 export class HomeComponent implements OnInit {
 
-  valorTotalMes: FaturaValorTotalDTO | null = null;
+  lucroLiquidoMes: number | null = null;
+  lucroBrutoMes: number | null = null;
 
-  produtoTotalMes: FaturaValorTotalDTO | null = null;
-  servicoTotalMes: FaturaValorTotalDTO | null = null;
 
   constructor(
     private faturaService: FaturaService,
@@ -21,9 +20,7 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.obterValorTotalFaturasMesAtual();
-    this.totalProdutosMes();
-    this.totalServicoMes();
+    this.carregarDados();
 
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
@@ -33,40 +30,28 @@ export class HomeComponent implements OnInit {
   }
 
   carregarDados(): void {
-    this.obterValorTotalFaturasMesAtual();
-    this.totalProdutosMes();
-    this.totalServicoMes();
+    this.obterLucroLiquidoMes();
+    this.obterLucroBrutoMes();
   }
 
-  obterValorTotalFaturasMesAtual(): void {
-    this.faturaService.obterValorTotalFaturasMesAtual().subscribe({
+  obterLucroLiquidoMes(): void {
+    this.faturaService.obterLucroLiquidoMes().subscribe({
       next: (data) => {
-        this.valorTotalMes = data;
+        this.lucroLiquidoMes = data;
       },
       error: (err) => {
-        console.error('Erro ao obter valor total das faturas do mês', err);
+        console.error('Erro ao obter lucro liquido do mês', err);
       }
     });
   }
 
-  totalProdutosMes(): void {
-    this.faturaService.obterValorTotalFaturasProdutoMesAtual().subscribe({
+  obterLucroBrutoMes(): void {
+    this.faturaService.obterLucroBrutoMes().subscribe({
       next: (data) => {
-        this.produtoTotalMes = data;
+        this.lucroBrutoMes = data;
       },
       error: (err) => {
-        console.error('Erro ao obter valor total das faturas do mês', err);
-      }
-    });
-  }
-
-  totalServicoMes(): void {
-    this.faturaService.obterValorTotalFaturasServicoMesAtual().subscribe({
-      next: (data) => {
-        this.servicoTotalMes = data;
-      },
-      error: (err) => {
-        console.error('Erro ao obter valor total das faturas do mês', err);
+        console.error('Erro ao obter lucro bruto do mês', err);
       }
     });
   }

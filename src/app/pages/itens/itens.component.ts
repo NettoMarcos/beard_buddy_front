@@ -4,12 +4,12 @@ import { ProdutoAtualizarDTO, ProdutoCadastroDTO, ProdutoDetalhesDTO, ProdutoSer
 import { ServicoAtualizarDTO, ServicoCadastroDTO, ServicoDetalhesDTO, ServicoService } from 'src/app/service/servico.service';
 
 @Component({
-  selector: 'app-produtos-servicos',
+  selector: 'app-itens',
   standalone: false,
-  templateUrl: './produtos-servicos.component.html',
-  styleUrls: ['./produtos-servicos.component.scss']
+  templateUrl: './itens.html',
+  styleUrls: ['./itens.scss']
 })
-export class ProdutosServicosComponent {
+export class ItensComponent {
   produtos: ProdutoDetalhesDTO[] = [];
   servicos: ServicoDetalhesDTO[] = [];
   formCadastroServico!: FormGroup;
