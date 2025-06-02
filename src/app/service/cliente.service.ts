@@ -32,7 +32,7 @@ export interface ClienteAtualizarDTO {
   providedIn: 'root',
 })
 export class ClienteService {
-  private baseUrl: string = `${environment.apiUrl}/cliente`;// Substitua pelo URL do seu backend
+  private baseUrl: string = 'https://beardbuddy.onrender.com/cliente';// Substitua pelo URL do seu backend
 
   constructor(private http: HttpClient) {}
 

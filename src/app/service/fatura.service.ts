@@ -42,7 +42,7 @@ export interface FaturaValorTotalDTO {
   providedIn: 'root'
 })
 export class FaturaService {
-  private baseUrl: string = `${environment.apiUrl}/fatura`;  // Defina a URL base para o seu back-end
+  private baseUrl: string = 'https://beardbuddy.onrender.com/fatura';  // Defina a URL base para o seu back-end
 
   constructor(private http: HttpClient) {}
 

@@ -26,7 +26,7 @@ export interface itemVendidoDetalhesDTO {
 })
 export class ItemVemdidoService {
 
-  private baseUrl: string = `${environment.apiUrl}/item_vendido`;
+  private baseUrl: string = 'https://beardbuddy.onrender.com/item_vendido';
 
   constructor(private http: HttpClient) { }
 

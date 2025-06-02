@@ -35,7 +35,7 @@ export interface ProdutoAtualizarDTO {
 })
 export class ProdutoService {
 
- private baseUrl: string = `${environment.apiUrl}/produto`; // Ajuste conforme necessário
+ private baseUrl: string = 'https://beardbuddy.onrender.com/produto';
 
   constructor(private http: HttpClient) {}
 
