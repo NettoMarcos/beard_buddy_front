@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 export interface ClienteDetalhesDTO {
   id: number;
@@ -31,7 +32,7 @@ export interface ClienteAtualizarDTO {
   providedIn: 'root',
 })
 export class ClienteService {
-  private baseUrl = 'http://localhost:8080/cliente'; // Substitua pelo URL do seu backend
+  private baseUrl: string = `${environment.apiUrl}/cliente`;// Substitua pelo URL do seu backend
 
   constructor(private http: HttpClient) {}
 

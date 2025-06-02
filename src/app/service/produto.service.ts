@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 // Interfaces para as DTOs
 export interface ProdutoDetalhesDTO {
@@ -33,33 +34,34 @@ export interface ProdutoAtualizarDTO {
   providedIn: 'root'
 })
 export class ProdutoService {
-  private apiUrl = 'http://localhost:8080/produto'; // Ajuste conforme necessário
+
+ private baseUrl: string = `${environment.apiUrl}/produto`; // Ajuste conforme necessário
 
   constructor(private http: HttpClient) {}
 
   // Cadastrar Produto
   cadastrarProduto(dto: ProdutoCadastroDTO): Observable<ProdutoDetalhesDTO> {
-    return this.http.post<ProdutoDetalhesDTO>(`${this.apiUrl}/cadastrar`, dto);
+    return this.http.post<ProdutoDetalhesDTO>(`${this.baseUrl}/cadastrar`, dto);
   }
 
   // Listar Produtos
   listarProdutos(): Observable<any> {
     
-    return this.http.get<any>(`${this.apiUrl}/listar`);
+    return this.http.get<any>(`${this.baseUrl}/listar`);
   }
 
   // Buscar Produto por ID
   buscarPorId(id: number): Observable<ProdutoDetalhesDTO> {
-    return this.http.get<ProdutoDetalhesDTO>(`${this.apiUrl}/${id}`);
+    return this.http.get<ProdutoDetalhesDTO>(`${this.baseUrl}/${id}`);
   }
 
   // Atualizar Produto
   atualizarProduto(dto: ProdutoAtualizarDTO): Observable<ProdutoDetalhesDTO> {
-    return this.http.put<ProdutoDetalhesDTO>(`${this.apiUrl}/atualizar`, dto);
+    return this.http.put<ProdutoDetalhesDTO>(`${this.baseUrl}/atualizar`, dto);
   }
 
   // Excluir Produto
   excluirProduto(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/atualizar/${id}`);
+    return this.http.delete<void>(`${this.baseUrl}/atualizar/${id}`);
   }
 }
