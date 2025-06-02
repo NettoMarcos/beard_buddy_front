@@ -28,7 +28,7 @@ export interface ServicoAtualizarDTO {
   providedIn: 'root'
 })
 export class ServicoService {
-  private baseUrl: string = 'https://beardbuddy.onrender.com/servico';
+  private baseUrl: string = `${environment.apiUrl}/servico`;
 
   constructor(private http: HttpClient) {}
 
